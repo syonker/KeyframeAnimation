@@ -23,6 +23,7 @@
     <ClCompile Include="DOF.cpp" />
     <ClCompile Include="Joint.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Rig.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Skin.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="Header1.h" />
     <ClInclude Include="Joint.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Rig.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Skin.h" />

@@ -66,19 +66,13 @@ Tester::Tester(const char *windowTitle,int argc,char **argv) {
 	Cam=new Camera;
 	Cam->SetAspect(float(WinX)/float(WinY));
 
-
-	//Prep Skeleton
-	currSkel = new Skeleton();
-	currSkel->Load("../skeletons/head.skel");
-	currSkel->Update(glm::mat4(1.0f));
-
-	//Prep Skin
-	currSkin = new Skin(currSkel);
-	currSkin->Load("../skins/head.skin");
-	currSkin->Update(glm::mat4(1.0f));
+	//Prep Rig
+	currRig = new Rig();
+	currRig->Load("../skeletons/wasp.skel", "../skins/wasp.skin");
+	currRig->Update(glm::mat4(1.0f));
 
 	drawSkel = true;
-
+	drawSkin = true;
 
 }
 
@@ -87,6 +81,7 @@ Tester::Tester(const char *windowTitle,int argc,char **argv) {
 Tester::~Tester() {
 	delete Program;
 	delete Cam;
+	delete currRig;
 
 	glFinish();
 	glutDestroyWindow(WindowHandle);
@@ -98,8 +93,7 @@ void Tester::Update() {
 	// Update the components in the world
 	Cam->Update();
 
-	currSkel->Update(glm::mat4(1.0f));
-	currSkin->Update(glm::mat4(1.0f));
+	currRig->Update(glm::mat4(1.0f));
 
 	// Tell glut to re-display the scene
 	glutSetWindow(WindowHandle);
@@ -120,14 +114,7 @@ void Tester::Draw() {
 	glViewport(0, 0, WinX, WinY);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if (drawSkel) {
-		float color = 1.0f;
-		color = ((float)(currSkel->activeJoint->DOFnum + 1) / (float)(currSkel->activeJoint->DOFcount));
-		currSkel->activeJoint->model->ambient = { color,color,color };
-		currSkel->Draw(Cam->GetViewProjectMtx(), Program->GetProgramID());
-	}
-
-	currSkin->Draw(Cam->GetViewProjectMtx(), Program->GetProgramID());
+	currRig->Draw(Cam->GetViewProjectMtx(), Program->GetProgramID(), drawSkel, drawSkin);
 
 	// Finish drawing scene
 	glFinish();
@@ -168,17 +155,25 @@ void Tester::Keyboard(int key,int x,int y) {
 				drawSkel = true;
 			}
 			break;
+		case '2':
+			if (drawSkin) {
+				drawSkin = false;
+			}
+			else {
+				drawSkin = true;
+			}
+			break;
 		case 'd':
-			currSkel->upSelection();
+			currRig->skeleton->upSelection();
 			break;
 		case 'a':
-			currSkel->downSelection();
+			currRig->skeleton->downSelection();
 			break;
 		case 'w':
-			currSkel->incDOF();
+			currRig->skeleton->incDOF();
 			break;
 		case 's':
-			currSkel->decDOF();
+			currRig->skeleton->decDOF();
 			break;
 	}
 }

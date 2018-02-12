@@ -12,6 +12,7 @@
 #include "DOF.h"
 #include "Skin.h"
 #include "Vertex.h"
+#include "Rig.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -49,10 +50,10 @@ private:
 	ShaderProgram *Program;
 	Camera *Cam;
 
-	Skeleton* currSkel;
-	Skin* currSkin;
+	Rig* currRig;
 
 	bool drawSkel;
+	bool drawSkin;
 
 };
 

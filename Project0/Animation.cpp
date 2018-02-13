@@ -29,11 +29,12 @@ bool Animation::Load(const char *file) {
 	token->FindToken("numchannels");	numChannels = token->GetFloat();
 
 	//parse each channel
-	for (int i = 0; i <= numChannels; i++) {
+	for (int i = 0; i < numChannels; i++) {
 		token->FindToken("channel");
 		token->FindToken("{");
 
 		Channel* newChannel = new Channel();
+		channels.push_back(newChannel);
 		newChannel->Load(token);
 
 		token->FindToken("}");

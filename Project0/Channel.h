@@ -19,6 +19,9 @@ public:
 	std::vector<Keyframe*> keyframes;
 	unsigned int numKeys;
 
+	char extrapIn[256];
+	char extrapOut[256];
+
 private:
 
 };

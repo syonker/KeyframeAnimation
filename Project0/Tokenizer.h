@@ -35,6 +35,8 @@ public:
 	bool SkipLine();
 	bool Reset();
 
+	bool GetWord(std::vector<char>*);
+
 	// Access functions
 	char *GetFileName()			{return FileName;}
 	int GetLineNum()			{return LineNum;}

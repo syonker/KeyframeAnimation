@@ -13,6 +13,10 @@
 #include "Skin.h"
 #include "Vertex.h"
 #include "Rig.h"
+#include "Animation.h"
+#include "Channel.h"
+#include "Keyframe.h"
+#include "Player.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -51,6 +55,7 @@ private:
 	Camera *Cam;
 
 	Rig* currRig;
+	Animation* currAnimation;
 
 	bool drawSkel;
 	bool drawSkin;

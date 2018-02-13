@@ -74,6 +74,9 @@ Tester::Tester(const char *windowTitle,int argc,char **argv) {
 	drawSkel = true;
 	drawSkin = true;
 
+	currAnimation = new Animation();
+	currAnimation->Load("../animations/wasp2_walk.anim");
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

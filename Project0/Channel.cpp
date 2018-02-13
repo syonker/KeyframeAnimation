@@ -11,9 +11,6 @@ Channel::~Channel() {
 
 bool Channel::Load(Tokenizer* token) {
 
-	char* extrapIn;
-	char* extrapOut;
-
 	token->FindToken("extrapolate");
 	token->SkipWhitespace();
 	token->GetToken(extrapIn);
@@ -21,11 +18,11 @@ bool Channel::Load(Tokenizer* token) {
 	token->GetToken(extrapOut);
 
 	token->FindToken("keys"); 
-	numKeys = token->GetFloat;
+	numKeys = token->GetFloat();
 	token->FindToken("{");
 
 	//parse each keyframe
-	for (int i = 0; i <= numKeys; i++) {
+	for (int i = 0; i < numKeys; i++) {
 
 		Keyframe* newKeyframe = new Keyframe();
 		newKeyframe->Load(token);
@@ -34,9 +31,12 @@ bool Channel::Load(Tokenizer* token) {
 
 	token->FindToken("}");
 
+	return true;
+
 }
 
 float Channel::Evaluate(float time) {
 
+	return 0;
 
 }

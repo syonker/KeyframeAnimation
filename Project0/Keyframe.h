@@ -17,8 +17,8 @@ public:
 	float time;
 	float value;
 	float tangIn, tangOut;
-	char* ruleIn;
-	char* ruleOut;
+	char ruleIn[256];
+	char ruleOut[256];
 	float a, b, c, d;
 
 private:

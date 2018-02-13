@@ -1,7 +1,10 @@
 
 #include "Player.h"
 
-Player::Player() {
+Player::Player(Animation* newAnimation, Skeleton* newSkeleton) {
+
+	animation = newAnimation;
+	skeleton = newSkeleton;
 
 }
 

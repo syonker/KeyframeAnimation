@@ -30,11 +30,13 @@ bool Keyframe::Load(Tokenizer* token) {
 	//parse a num
 	else {
 
-		ruleIn = "basic";
-		ruleOut = "basic";
+		//ruleIn = "basic";
+		//ruleOut = "basic";
 		tangIn = token->GetFloat();
 		tangOut = token->GetFloat();
 
 	}
+
+	return true;
 
 }

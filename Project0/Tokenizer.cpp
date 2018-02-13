@@ -161,6 +161,25 @@ bool Tokenizer::GetToken(char *str) {
 		c=CheckChar();
 	}
 	str[pos]='\0';
+
+	return true;
+}
+
+bool Tokenizer::GetWord(std::vector<char>* temp) {
+	SkipWhitespace();
+
+	int pos = 0;
+	char c = CheckChar();
+	while (c != ' ' && c != '\n' && c != '\t' && c != '\r' && !feof((FILE*)File)) {
+		temp->push_back(GetChar());
+		c = CheckChar();
+	}
+	char* word;
+
+	for (int i = 0; i < temp->size(); i++) {
+		word;
+	}
+
 	return true;
 }
 

@@ -40,3 +40,41 @@ bool Keyframe::Load(Tokenizer* token) {
 	return true;
 
 }
+
+void Keyframe::Precompute() {
+
+
+	if (strcmp(ruleIn, "flat") == 0) {
+
+		tangIn = 0;
+
+	}
+	else if (strcmp(ruleIn, "linear") == 0) {
+
+	}
+	else if (strcmp(ruleIn, "smooth") == 0) {
+
+	}
+	else {
+		
+	}
+
+
+
+	if (strcmp(ruleOut, "flat") == 0) {
+
+		tangOut = 0;
+
+	}
+	else if (strcmp(ruleOut, "linear") == 0) {
+
+	}
+	else if (strcmp(ruleOut, "smooth") == 0) {
+
+	}
+	else {
+
+	}
+
+
+}

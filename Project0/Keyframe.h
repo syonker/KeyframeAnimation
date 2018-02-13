@@ -11,6 +11,7 @@ public:
 
 	Keyframe();
 	~Keyframe();
+	void Precompute();
 
 	bool Load(Tokenizer* token);
 

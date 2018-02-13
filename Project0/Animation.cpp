@@ -48,6 +48,13 @@ bool Animation::Load(const char *file) {
 
 
 
-//void Animation::Evaluate(float time, Pose &p) {
+void Animation::Evaluate(float time, std::vector<float> &pose) {
+	
+	//for each channel get the new pose value
+	for (int i = 0; i < numChannels; i++) {
 
-//}
+		pose[i] = channels[i]->Evaluate(time);
+
+	}
+
+}

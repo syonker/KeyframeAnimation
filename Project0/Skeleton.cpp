@@ -35,8 +35,12 @@ bool Skeleton::Load(const char *file) {
 	joints.push_back(root);
 	root->Load(token, &joints);
 
+	numJoints = joints.size();
 
-	std::cerr << "Final Count: " << joints.size() << std::endl;
+	std::cerr << "Number of Joints: " << numJoints << std::endl;
+
+	numDOFs = numJoints * 3;
+
 
 	//makeJointVector();
 	jointNum = 0;

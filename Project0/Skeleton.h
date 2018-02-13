@@ -32,6 +32,9 @@ public:
 	float increment;
 	std::vector<Joint*> joints;
 
+	unsigned int numJoints;
+	unsigned int numDOFs;
+
 private:
 
 };

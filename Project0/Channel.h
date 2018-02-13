@@ -14,7 +14,9 @@ public:
 	~Channel();
 
 	bool Load(Tokenizer* token);
+	void Precompute();
 	float Evaluate(float time);
+	bool ExactlyOnKey(float time, float *value);
 
 	std::vector<Keyframe*> keyframes;
 	unsigned int numKeys;

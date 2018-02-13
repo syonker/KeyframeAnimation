@@ -14,7 +14,7 @@ public:
 	~Animation();
 
 	bool Load(const char *file);
-	//void Evaluate(float time, Pose &p);
+	void Evaluate(float time, std::vector<float> &pose);
 
 	std::vector<Channel*> channels;
 

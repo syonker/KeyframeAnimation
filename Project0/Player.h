@@ -13,9 +13,16 @@ public:
 
 	Player(Animation* newAnimation, Skeleton* newSkeleton);
 	~Player();
+	void Evaluate();
+	void PoseSkel();
 
 	Animation* animation;
 	Skeleton* skeleton;
+
+	std::vector<float> pose;
+	float t;
+	float tStart, tEnd;
+	float tInc;
 
 private:
 

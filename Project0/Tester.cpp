@@ -68,7 +68,7 @@ Tester::Tester(const char *windowTitle,int argc,char **argv) {
 
 	//Prep Rig
 	currRig = new Rig();
-	currRig->Load("../skeletons/wasp.skel", "../skins/wasp.skin");
+	currRig->Load("../skeletons/wasp2.skel", "../skins/wasp2.skin");
 	currRig->Update(glm::mat4(1.0f));
 
 	drawSkel = true;

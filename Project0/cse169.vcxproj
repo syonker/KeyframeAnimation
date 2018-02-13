@@ -19,10 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Channel.cpp" />
     <ClCompile Include="DOF.cpp" />
     <ClCompile Include="Joint.cpp" />
+    <ClCompile Include="Keyframe.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rig.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skeleton.cpp" />
@@ -33,13 +37,15 @@
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Channel.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="DOF.h" />
-    <ClInclude Include="Header.h" />
-    <ClInclude Include="Header1.h" />
     <ClInclude Include="Joint.h" />
+    <ClInclude Include="Keyframe.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Rig.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skeleton.h" />

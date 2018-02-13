@@ -1,24 +1,17 @@
-
-
 #pragma once
 
 #include "Core.h"
-#include "Joint.h"
 #include "Tokenizer.h"
 #include <iostream>
 
-class Skin
+class Channel
 {
 
 public:
 
-	Skin();
-	~Skin();
-
-
-
+	Channel();
+	~Channel();
 
 private:
-
 
 };

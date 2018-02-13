@@ -12,6 +12,15 @@ public:
 	Keyframe();
 	~Keyframe();
 
+	bool Load(Tokenizer* token);
+
+	float time;
+	float value;
+	float tangIn, tangOut;
+	char* ruleIn;
+	char* ruleOut;
+	float a, b, c, d;
+
 private:
 
 };

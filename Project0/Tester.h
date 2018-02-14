@@ -56,6 +56,7 @@ private:
 
 	Rig* currRig;
 	Animation* currAnimation;
+	Player* currPlayer;
 
 	bool drawSkel;
 	bool drawSkin;

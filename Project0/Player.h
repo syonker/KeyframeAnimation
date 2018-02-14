@@ -24,6 +24,8 @@ public:
 	float tStart, tEnd;
 	float tInc;
 
+	glm::mat4 rootTranslate;
+
 private:
 
 };

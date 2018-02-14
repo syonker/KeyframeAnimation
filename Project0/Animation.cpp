@@ -50,9 +50,7 @@ bool Animation::Load(const char *file) {
 	token->Close();
 
 
-
-
-
+	Precompute();
 
 	return true;
 }
@@ -72,6 +70,7 @@ void Animation::Evaluate(float time, std::vector<float> &pose) {
 
 
 void Animation::Precompute() {
+
 
 	//for each channel
 	for (int i = 0; i < numChannels; i++) {

@@ -41,6 +41,12 @@ void Channel::Precompute(glm::mat4 B) {
 
 	Keyframe* currKey;
 
+	if (numKeys == 1) {
+		keyframes[0]->tangIn = 0;
+		keyframes[0]->tangOut = 0;
+		return;
+	}
+
 	//compute tangents from rules
 	for (int i = 0; i < numKeys; i++) {
 
@@ -69,7 +75,7 @@ void Channel::Precompute(glm::mat4 B) {
 		else if (strcmp(currKey->ruleIn, "smooth") == 0) {
 
 			//use linear if first or last key
-			if (i = 0) {
+			if (i == 0) {
 				currKey->tangIn = ((keyframes[i + 1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
 			}
 			else if (i == numKeys - 1) {
@@ -106,7 +112,7 @@ void Channel::Precompute(glm::mat4 B) {
 		else if (strcmp(currKey->ruleOut, "smooth") == 0) {
 
 			//use linear if first or last key
-			if (i = 0) {
+			if (i == 0) {
 				currKey->tangOut = ((keyframes[i + 1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
 			}
 			else if (i == numKeys - 1) {

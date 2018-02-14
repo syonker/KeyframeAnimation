@@ -77,6 +77,10 @@ Tester::Tester(const char *windowTitle,int argc,char **argv) {
 	currAnimation = new Animation();
 	currAnimation->Load("../animations/wasp2_walk.anim");
 
+	currPlayer = new Player(currAnimation, currRig->skeleton);
+
+	currPlayer->Evaluate();
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +100,10 @@ void Tester::Update() {
 	// Update the components in the world
 	Cam->Update();
 
-	currRig->Update(glm::mat4(1.0f));
+	currPlayer->Evaluate();
+
+	//currRig->Update(glm::mat4(1.0f));
+	currRig->Update(currPlayer->rootTranslate);
 
 	// Tell glut to re-display the scene
 	glutSetWindow(WindowHandle);

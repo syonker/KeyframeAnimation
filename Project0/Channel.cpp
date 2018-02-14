@@ -60,9 +60,14 @@ void Channel::Precompute(glm::mat4 B) {
 		}
 		else if (strcmp(currKey->ruleIn, "linear") == 0) {
 
-			if (i < numKeys - 1) {
+			if ((i < numKeys - 1) && i > 0) {
 
-				currKey->tangIn = ((keyframes[i+1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
+				currKey->tangIn = ((currKey->value - keyframes[i - 1]->value) / (currKey->time - keyframes[i - 1]->time));
+
+			}
+			else if (i==0) {
+
+				currKey->tangIn = ((keyframes[i + 1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
 
 			}
 			else {
@@ -87,6 +92,10 @@ void Channel::Precompute(glm::mat4 B) {
 			}
 
 		}
+		else {
+			std::cerr << "NO TANGENT RULE" << std::endl;
+
+		}
 
 
 		//compute tangOut
@@ -97,16 +106,23 @@ void Channel::Precompute(glm::mat4 B) {
 		}
 		else if (strcmp(currKey->ruleOut, "linear") == 0) {
 
-			if (i < numKeys - 1) {
+
+			if ((i < numKeys - 1) && i > 0) {
 
 				currKey->tangOut = ((keyframes[i + 1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
 
 			}
-			else {
+			else if (i == 0) {
 
-				currKey->tangOut = ((currKey->value - keyframes[i - 1]->value) / (currKey->time - keyframes[i - 1]->time));
+				currKey->tangOut = currKey->tangIn;
 
 			}
+			else {
+
+				currKey->tangOut = currKey->tangIn;
+
+			}
+
 
 		}
 		else if (strcmp(currKey->ruleOut, "smooth") == 0) {
@@ -124,6 +140,10 @@ void Channel::Precompute(glm::mat4 B) {
 			}
 
 		}
+		else {
+			std::cerr << "NO TANGENT RULE" << std::endl;
+
+		}
 
 
 	}
@@ -136,15 +156,15 @@ void Channel::Precompute(glm::mat4 B) {
 		glm::vec4 g;
 		g.x = keyframes[i]->value;
 		g.y = keyframes[i + 1]->value;
-		g.z = (keyframes[i + 1] - keyframes[i])*keyframes[i]->tangIn;
-		g.w = (keyframes[i + 1] - keyframes[i])*keyframes[i]->tangOut;
+		g.z = (keyframes[i + 1]->time - keyframes[i]->time)*keyframes[i]->tangOut;
+		g.w = (keyframes[i + 1]->time - keyframes[i]->time)*keyframes[i+1]->tangIn;
 
-		glm::vec4 coeff = B * g;
+		//glm::vec4 coeff = B * g;
 
-		keyframes[i]->a = coeff.x;
-		keyframes[i]->b = coeff.y;
-		keyframes[i]->c = coeff.z;
-		keyframes[i]->d = coeff.w;
+		keyframes[i]->a = 2 * g.x - 2 * g.y + g.z + g.w;
+		keyframes[i]->b = -3 * g.x + 3 * g.y - 2 * g.z - 1 * g.w;
+		keyframes[i]->c = g.z;
+		keyframes[i]->d = g.x;
 
 	}
 
@@ -154,6 +174,7 @@ float Channel::Evaluate(float time) {
 
 	float curr;
 	float *currPtr = &curr;
+	float duration = keyframes[numKeys - 1]->time - keyframes[0]->time;
 
 	//t is before the first key (use extrapIn)
 	if (time < keyframes[0]->time) {
@@ -165,22 +186,22 @@ float Channel::Evaluate(float time) {
 		}
 		else if (strcmp(extrapIn, "linear") == 0) {
 
-			curr = (keyframes[0]->value)*keyframes[0]->tangIn;
+			curr = (keyframes[0]->tangIn)*(time) + ((keyframes[0]->value) - (keyframes[0]->tangIn)*(keyframes[0]->time));
 
 		}
 		else if (strcmp(extrapIn, "cycle") == 0) {
 
-			curr = keyframes[0]->value;
+			curr = Evaluate(time + duration);
 
 		}
 		else if (strcmp(extrapIn, "cycle_offset") == 0) {
 
-			curr = keyframes[0]->value;
+			curr = keyframes[0]->value - (keyframes[numKeys-1]->value - Evaluate(time + duration));
 
 		}
 		else if (strcmp(extrapIn, "bounce") == 0) {
 
-			curr = keyframes[0]->value;
+			curr = Evaluate(time + duration);
 
 		}
 		else {
@@ -199,22 +220,22 @@ float Channel::Evaluate(float time) {
 		}
 		else if (strcmp(extrapIn, "linear") == 0) {
 
-			curr = (keyframes[numKeys - 1]->value)*keyframes[numKeys - 1]->tangOut;
+			curr = (keyframes[numKeys - 1]->tangIn)*(time)+((keyframes[numKeys - 1]->value) - (keyframes[numKeys - 1]->tangIn)*(keyframes[numKeys - 1]->time));
 
 		}
 		else if (strcmp(extrapIn, "cycle") == 0) {
 
-			curr = keyframes[numKeys - 1]->value;
+			curr = Evaluate(time - duration);
 
 		}
 		else if (strcmp(extrapIn, "cycle_offset") == 0) {
 
-			curr = keyframes[numKeys - 1]->value;
+			curr = keyframes[numKeys-1]->value + (Evaluate(time - duration) - keyframes[0]->value);
 
 		}
 		else if (strcmp(extrapIn, "bounce") == 0) {
 
-			curr = keyframes[numKeys - 1]->value;
+			curr = Evaluate(time - duration);
 
 		}
 		else {

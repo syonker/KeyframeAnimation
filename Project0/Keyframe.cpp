@@ -35,6 +35,7 @@ bool Keyframe::Load(Tokenizer* token) {
 		tangIn = token->GetFloat();
 		tangOut = token->GetFloat();
 
+		std::cerr << "float tangents given" << std::endl;
 	}
 
 	return true;

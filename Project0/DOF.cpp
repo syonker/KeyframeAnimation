@@ -17,12 +17,12 @@ DOF::~DOF()
 
 void DOF::SetValue(float newValue) {
 
-	if (newValue < min) {
-		newValue = min;
-	}
-	else if (newValue > max) {
-		newValue = max;
-	}
+	//if (newValue < min) {
+	//	newValue = min;
+	//}
+	//else if (newValue > max) {
+	//	newValue = max;
+	//}
 
 	value = newValue;
 

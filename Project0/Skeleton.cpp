@@ -43,7 +43,7 @@ bool Skeleton::Load(const char *file) {
 
 
 	//makeJointVector();
-	std::cerr << "Size of Joints: " << joints.size() << std::endl;
+	//std::cerr << "Size of Joints: " << joints.size() << std::endl;
 
 	jointNum = 0;
 

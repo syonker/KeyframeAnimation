@@ -14,7 +14,7 @@ public:
 	~Channel();
 
 	bool Load(Tokenizer* token);
-	void Precompute();
+	void Precompute(glm::mat4 B);
 	float Evaluate(float time);
 	bool ExactlyOnKey(float time, float *value);
 

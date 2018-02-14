@@ -37,7 +37,7 @@ bool Channel::Load(Tokenizer* token) {
 
 }
 
-void Channel::Precompute() {
+void Channel::Precompute(glm::mat4 B) {
 
 	Keyframe* currKey;
 
@@ -125,6 +125,23 @@ void Channel::Precompute() {
 
 
 	//compute cubic coefficients from tangent data
+	for (int i = 0; i < numKeys - 1; i++) {
+
+		glm::vec4 g;
+		g.x = keyframes[i]->value;
+		g.y = keyframes[i + 1]->value;
+		g.z = (keyframes[i + 1] - keyframes[i])*keyframes[i]->tangIn;
+		g.w = (keyframes[i + 1] - keyframes[i])*keyframes[i]->tangOut;
+
+		glm::vec4 coeff = B * g;
+
+		keyframes[i]->a = coeff.x;
+		keyframes[i]->b = coeff.y;
+		keyframes[i]->c = coeff.z;
+		keyframes[i]->d = coeff.w;
+
+	}
+
 }
 
 float Channel::Evaluate(float time) {
@@ -142,14 +159,22 @@ float Channel::Evaluate(float time) {
 		}
 		else if (strcmp(extrapIn, "linear") == 0) {
 
+			curr = (keyframes[0]->value)*keyframes[0]->tangIn;
+
 		}
 		else if (strcmp(extrapIn, "cycle") == 0) {
+
+			curr = keyframes[0]->value;
 
 		}
 		else if (strcmp(extrapIn, "cycle_offset") == 0) {
 
+			curr = keyframes[0]->value;
+
 		}
 		else if (strcmp(extrapIn, "bounce") == 0) {
+
+			curr = keyframes[0]->value;
 
 		}
 		else {
@@ -161,6 +186,35 @@ float Channel::Evaluate(float time) {
 	//t is after the last key(use extrapOut)
 	else if (time > keyframes[numKeys-1]->time) {
 
+		if (strcmp(extrapIn, "constant") == 0) {
+
+			curr = keyframes[numKeys - 1]->value;
+
+		}
+		else if (strcmp(extrapIn, "linear") == 0) {
+
+			curr = (keyframes[numKeys - 1]->value)*keyframes[numKeys - 1]->tangOut;
+
+		}
+		else if (strcmp(extrapIn, "cycle") == 0) {
+
+			curr = keyframes[numKeys - 1]->value;
+
+		}
+		else if (strcmp(extrapIn, "cycle_offset") == 0) {
+
+			curr = keyframes[numKeys - 1]->value;
+
+		}
+		else if (strcmp(extrapIn, "bounce") == 0) {
+
+			curr = keyframes[numKeys - 1]->value;
+
+		}
+		else {
+			std::cerr << "INVALID EXTRAPIN!" << std::endl;
+		}
+
 	}
 
 	//t falls exactly on some key(return key value)
@@ -170,6 +224,22 @@ float Channel::Evaluate(float time) {
 	
 	//t falls between two keys(evaluate cubic equation)
 	else {
+
+		//find which keys it lies between
+		int t0, t1;
+		int index = -1;
+		for (int i = 0; i < numKeys-1; i++) {
+			if ((keyframes[i]->time < time) && (keyframes[i + 1]->time > time)) {
+				t0 = keyframes[i]->time;
+				t1 = keyframes[i+1]->time;
+				index = i;
+				break;
+			}
+		}
+
+		float u = ((time - t0) / (t1 - t0));
+
+		curr = keyframes[index]->d + u * (keyframes[index]->c + u * (keyframes[index]->b + u * (keyframes[index]->a)));
 
 	}
 
@@ -184,7 +254,7 @@ bool Channel::ExactlyOnKey(float time, float *value) {
 
 		if (keyframes[i]->time == time) {
 
-			value = keyframes[i]->value;
+			*value = keyframes[i]->value;
 			return true;
 		}
 

@@ -3,6 +3,11 @@
 
 Animation::Animation() {
 
+	B = {2,-2,1,1,
+		 -3,3,-2,-1,
+		 0,0,1,0,
+		 1,0,0,0};
+
 }
 
 Animation::~Animation() {
@@ -43,6 +48,12 @@ bool Animation::Load(const char *file) {
 	// Finish
 	token->FindToken("}");
 	token->Close();
+
+
+
+
+
+
 	return true;
 }
 
@@ -54,6 +65,18 @@ void Animation::Evaluate(float time, std::vector<float> &pose) {
 	for (int i = 0; i < numChannels; i++) {
 
 		pose[i] = channels[i]->Evaluate(time);
+
+	}
+
+}
+
+
+void Animation::Precompute() {
+
+	//for each channel
+	for (int i = 0; i < numChannels; i++) {
+
+		channels[i]->Precompute(B);
 
 	}
 

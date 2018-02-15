@@ -124,6 +124,7 @@ void Tester::Draw() {
 	glViewport(0, 0, WinX, WinY);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
 	currRig->Draw(Cam->GetViewProjectMtx(), Program->GetProgramID(), drawSkel, drawSkin);
 
 	// Finish drawing scene

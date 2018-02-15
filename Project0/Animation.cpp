@@ -75,6 +75,12 @@ void Animation::Precompute() {
 	//for each channel
 	for (int i = 0; i < numChannels; i++) {
 
+		//if (i != 7) {
+		//	channels[i]->Precompute(B);
+		//}
+		//else {
+		//	channels[i]->PrecomputeDebug();
+		//}
 		channels[i]->Precompute(B);
 
 	}

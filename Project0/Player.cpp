@@ -31,7 +31,7 @@ void Player::Evaluate() {
 
 	t += tInc;
 
-	std::cerr << "t: " << t << std::endl;
+	//std::cerr << "t: " << t << std::endl;
 
 }
 
@@ -44,9 +44,9 @@ void Player::PoseSkel() {
 					   0,0,1,0,
 					   pose[0],pose[1],pose[2],1 };
 
-	std::cerr << "Pose[0] " << pose[0] << std::endl;
-	std::cerr << "Pose[1] " << pose[1] << std::endl;
-	std::cerr << "Pose[2] " << pose[2] << std::endl;
+	//std::cerr << "Pose[0] " << pose[0] << std::endl;
+	//std::cerr << "Pose[1] " << pose[1] << std::endl;
+	//std::cerr << "Pose[2] " << pose[2] << std::endl;
 
 	//skeleton->root->
 
@@ -62,6 +62,37 @@ void Player::PoseSkel() {
 		poseIndex++;
 
 	}
+	
+
+	/*
+	int poseIndex = 3;
+	for (int i = 0; i < 2; i++) {
+		
+		if (i != 1) {
+
+			skeleton->joints[i]->jointDOF[0]->SetValue(pose[poseIndex]);
+			
+		}
+		poseIndex++;
+
+		if (poseIndex == 7) {
+			//std::cerr << "Pose: " << pose[poseIndex] << std::endl;
+
+		}
+
+		skeleton->joints[i]->jointDOF[1]->SetValue(pose[poseIndex]);
+		poseIndex++;
+
+		if (i != 1) {
+			skeleton->joints[i]->jointDOF[2]->SetValue(pose[poseIndex]);
+			
+		}
+		poseIndex++;
+
+	}
+	*/
+	
+	
 	
 	
 	

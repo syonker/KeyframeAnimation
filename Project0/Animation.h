@@ -22,8 +22,6 @@ public:
 	float tStart, tEnd;
 	unsigned int numChannels;
 
-	glm::mat4 B;
-
 private:
 
 };

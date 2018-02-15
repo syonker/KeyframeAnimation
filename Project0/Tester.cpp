@@ -69,7 +69,6 @@ Tester::Tester(const char *windowTitle,int argc,char **argv) {
 	//Prep Rig
 	currRig = new Rig();
 	currRig->Load("../skeletons/wasp2.skel", "../skins/wasp2.skin");
-	//currRig->Update(glm::mat4(1.0f));
 
 	drawSkel = true;
 	drawSkin = true;
@@ -78,8 +77,6 @@ Tester::Tester(const char *windowTitle,int argc,char **argv) {
 	currAnimation->Load("../animations/wasp2_walk.anim");
 
 	currPlayer = new Player(currAnimation, currRig->skeleton);
-
-	//currPlayer->Evaluate();
 
 }
 
@@ -102,7 +99,6 @@ void Tester::Update() {
 
 	currPlayer->Evaluate();
 
-	//currRig->Update(glm::mat4(1.0f));
 	currRig->Update(currPlayer->rootTranslate);
 
 	// Tell glut to re-display the scene
@@ -123,7 +119,6 @@ void Tester::Draw() {
 	// Begin drawing scene
 	glViewport(0, 0, WinX, WinY);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
 	currRig->Draw(Cam->GetViewProjectMtx(), Program->GetProgramID(), drawSkel, drawSkin);
 
@@ -185,15 +180,6 @@ void Tester::Keyboard(int key,int x,int y) {
 			break;
 		case 's':
 			currRig->skeleton->decDOF();
-			break;
-		case 'x':
-			currRig->skeleton->root->jointDOF[0]->value += 0.1f;
-			break;
-		case 'y':
-			currRig->skeleton->root->jointDOF[1]->value += 0.1f;
-			break;
-		case 'z':
-			currRig->skeleton->root->jointDOF[2]->value += 0.1f;
 			break;
 	}
 }

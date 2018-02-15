@@ -28,7 +28,6 @@ bool Channel::Load(Tokenizer* token) {
 		keyframes.push_back(newKeyframe);
 		newKeyframe->Load(token);
 
-
 	}
 
 	token->FindToken("}");
@@ -39,126 +38,7 @@ bool Channel::Load(Tokenizer* token) {
 
 
 
-
-
-void Channel::PrecomputeDebug() {
-
-	Keyframe* currKey;
-
-	if (numKeys == 1) {
-		keyframes[0]->tangIn = 0;
-		keyframes[0]->tangOut = 0;
-		return;
-	}
-
-	//compute tangents from rules
-	for (int i = 0; i < numKeys; i++) {
-
-		currKey = keyframes[i];
-
-		//compute tangIn
-		if (strcmp(currKey->ruleIn, "flat") == 0) {
-
-			currKey->tangIn = 0;
-
-		}
-		else if (strcmp(currKey->ruleIn, "linear") == 0) {
-
-			if ((i < numKeys - 1) && i > 0) {
-
-				currKey->tangIn = ((currKey->value - keyframes[i - 1]->value) / (currKey->time - keyframes[i - 1]->time));
-
-			}
-			else if (i == 0) {
-
-				currKey->tangIn = ((keyframes[i + 1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
-
-			}
-			else {
-
-				currKey->tangIn = ((currKey->value - keyframes[i - 1]->value) / (currKey->time - keyframes[i - 1]->time));
-
-			}
-
-		}
-		else if (strcmp(currKey->ruleIn, "smooth") == 0) {
-
-			//use linear if first or last key
-			if (i == 0) {
-				currKey->tangIn = ((keyframes[i + 1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
-			}
-			else if (i == numKeys - 1) {
-				currKey->tangIn = ((currKey->value - keyframes[i - 1]->value) / (currKey->time - keyframes[i - 1]->time));
-			}
-			//if not first or last key
-			else {
-				currKey->tangIn = ((keyframes[i + 1]->value - keyframes[i - 1]->value) / (keyframes[i + 1]->time - keyframes[i - 1]->time));
-			}
-
-		}
-		else {
-			std::cerr << "NO TANGENT RULE" << std::endl;
-
-		}
-
-
-		//compute tangOut
-		if (strcmp(currKey->ruleOut, "flat") == 0) {
-
-			currKey->tangOut = 0;
-
-		}
-		else if (strcmp(currKey->ruleOut, "linear") == 0) {
-
-
-			if ((i < numKeys - 1) && i > 0) {
-
-				currKey->tangOut = ((keyframes[i + 1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
-
-			}
-			else if (i == 0) {
-
-				currKey->tangOut = currKey->tangIn;
-
-			}
-			else {
-
-				currKey->tangOut = currKey->tangIn;
-
-			}
-
-
-		}
-		else if (strcmp(currKey->ruleOut, "smooth") == 0) {
-
-			//use linear if first or last key
-			if (i == 0) {
-				currKey->tangOut = ((keyframes[i + 1]->value - currKey->value) / (keyframes[i + 1]->time - currKey->time));
-			}
-			else if (i == numKeys - 1) {
-				currKey->tangOut = ((currKey->value - keyframes[i - 1]->value) / (currKey->time - keyframes[i - 1]->time));
-			}
-			//if not first or last key
-			else {
-				currKey->tangOut = ((keyframes[i + 1]->value - keyframes[i - 1]->value) / (keyframes[i + 1]->time - keyframes[i - 1]->time));
-			}
-
-		}
-		else {
-			std::cerr << "NO TANGENT RULE" << std::endl;
-
-		}
-
-
-	}
-
-
-}
-
-
-
-
-void Channel::Precompute(glm::mat4 B) {
+void Channel::Precompute() {
 
 	Keyframe* currKey;
 
@@ -280,8 +160,6 @@ void Channel::Precompute(glm::mat4 B) {
 		g.z = (keyframes[i + 1]->time - keyframes[i]->time)*keyframes[i]->tangOut;
 		g.w = (keyframes[i + 1]->time - keyframes[i]->time)*keyframes[i+1]->tangIn;
 
-		//glm::vec4 coeff = B * g;
-
 		keyframes[i]->a = 2 * g.x - 2 * g.y + g.z + g.w;
 		keyframes[i]->b = -3 * g.x + 3 * g.y - 2 * g.z - 1 * g.w;
 		keyframes[i]->c = g.z;
@@ -393,9 +271,6 @@ float Channel::Evaluate(float time) {
 	else if (ExactlyOnKey(time, currPtr)) {
 		//curr set in method already
 
-
-
-
 	}
 	
 	//t falls between two keys(evaluate cubic equation)
@@ -414,12 +289,10 @@ float Channel::Evaluate(float time) {
 		}
 
 		float u = ((time - t0) / (t1 - t0));
-		//float u = ((time - keyframes[0]->time) / (keyframes[numKeys-1]->time - keyframes[0]->time));
 
 		curr = keyframes[index]->d + u * (keyframes[index]->c + u * (keyframes[index]->b + u * (keyframes[index]->a)));
 
 	}
-
 
 	return curr;
 

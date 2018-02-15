@@ -3,11 +3,6 @@
 
 Animation::Animation() {
 
-	B = {2,-2,1,1,
-		 -3,3,-2,-1,
-		 0,0,1,0,
-		 1,0,0,0};
-
 }
 
 Animation::~Animation() {
@@ -71,17 +66,10 @@ void Animation::Evaluate(float time, std::vector<float> &pose) {
 
 void Animation::Precompute() {
 
-
 	//for each channel
 	for (int i = 0; i < numChannels; i++) {
 
-		//if (i != 7) {
-		//	channels[i]->Precompute(B);
-		//}
-		//else {
-		//	channels[i]->PrecomputeDebug();
-		//}
-		channels[i]->Precompute(B);
+		channels[i]->Precompute();
 
 	}
 

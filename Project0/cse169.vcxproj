@@ -31,7 +31,6 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Skin.cpp" />
-    <ClCompile Include="SpinningCube.cpp" />
     <ClCompile Include="Tester.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="Vertex.cpp" />
@@ -50,7 +49,6 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Skin.h" />
-    <ClInclude Include="SpinningCube.h" />
     <ClInclude Include="Tester.h" />
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="Vertex.h" />

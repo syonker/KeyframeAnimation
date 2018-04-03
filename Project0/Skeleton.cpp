@@ -27,7 +27,6 @@ bool Skeleton::Load(const char *file) {
 	std::cerr << "file: " << file << std::endl;
 
 	Tokenizer* token = new Tokenizer();
-	//token->Open(file, "skel");
 	token->Open(file);
 	token->FindToken("balljoint");
 	// Parse tree
@@ -41,17 +40,10 @@ bool Skeleton::Load(const char *file) {
 
 	numDOFs = numJoints * 3;
 
-
-	//makeJointVector();
-	//std::cerr << "Size of Joints: " << joints.size() << std::endl;
-
 	jointNum = 0;
 
 	activeJoint = root;
 	activeDOF = root->jointDOF[0];
-
-	
-
 
 	// Finish
 	token->Close();

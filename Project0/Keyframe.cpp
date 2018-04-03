@@ -30,12 +30,9 @@ bool Keyframe::Load(Tokenizer* token) {
 	//parse a num
 	else {
 
-		//ruleIn = "basic";
-		//ruleOut = "basic";
 		tangIn = token->GetFloat();
 		tangOut = token->GetFloat();
 
-		std::cerr << "float tangents given" << std::endl;
 	}
 
 	return true;

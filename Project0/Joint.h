@@ -18,8 +18,6 @@ public:
 	void AddChild(Joint* newChild);
 	void Draw(const glm::mat4 &viewProjMtx, uint shader);
 	bool Load(Tokenizer* token, std::vector<Joint*>* joints);
-
-
 	void makeJointVector(std::vector<Joint*>* joints);
 
 	std::vector<Joint*> children;
